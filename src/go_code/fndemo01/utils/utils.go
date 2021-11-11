@@ -4,6 +4,9 @@ import "fmt"
 
 func TestFn() string {
 	fmt.Println("TestFn 函数被调用")
+	type myInt int
+	var n myInt = 10
+	fmt.Printf("n的类型：%T 值：%v\n", n, n)
 	return "hahaha"
 }
 

@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	util "go_code/fndemo1/utils"
+	util "go_code/fndemo01/utils"
 )
 
 // func calc(n1 float64, n2 float64, opt byte) float64 {
