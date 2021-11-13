@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
-	"time"
+	// "math/rand"
+	// "time"
+	"go_code/fordemo/utils"
 )
 
 func main() {
@@ -16,19 +17,22 @@ func main() {
 		fmt.Println("i = ", i)
 	}
 	fmt.Println("i循环结束之后的值 = ", i)
-	var str string = "hello,world你好"
-	str2 := []rune(str)
+
+	// 循环输出字符
+	/* var str string = "hello,world你好"
+	str2 := []rune(str) // 按字节输出，切片
 	fmt.Println(str2)
 	for i := 0; i < len(str2); i++ {
 		fmt.Printf("%c", str2[i])
 	}
-	fmt.Println("\n")
+	fmt.Println()
+
 	var str02 = "xiao笑笑"
 	for index, val := range str02 {
 		fmt.Printf("index=%d val=%c \n", index, val)
-	}
+	} */
 
-	var num int = 100
+	/* var num int = 100
 	var count int
 	var sum int
 	for i := 0; i < num; i++ {
@@ -51,7 +55,7 @@ func main() {
 		fmt.Println("hello~", n)
 		n++
 	}
-	fmt.Println(n)
+	fmt.Println(n) */
 
 	// var classNum int = 3 // 3个班级
 	// var totalScore float64
@@ -72,7 +76,7 @@ func main() {
 	// fmt.Printf("%d个班级平均分数是%v \n", classNum, totalScore/(float64(classNum)*float64(pNum)))
 	fmt.Println("-------------------------------------")
 	// 打印金字塔
-	var countRow int = 5
+	/* var countRow int = 5
 	for i := 1; i <= countRow; i++ {
 		for n := 0; n < countRow-i; n++ {
 			fmt.Print(" ")
@@ -86,19 +90,25 @@ func main() {
 			}
 		}
 		fmt.Println()
-	}
+	} */
+
+	// 调用封装的打印金字塔的函数
+	utils.Pyramid(9)
 
 	// 打印九九乘法表
-	for i := 1; i <= 9; i++ {
+	/* for i := 1; i <= 9; i++ {
 		for j := 1; j <= i; j++ {
 			fmt.Printf("%v * %v = %v  ", j, i, i*j)
 		}
 		fmt.Println()
-	}
+	} */
+
+	// 调用封装的函数，打印九九乘法表
+	utils.Mtable(9)
 
 	// 随机数生成
 	// 设置种子
-	var times int = 0
+	/* var times int = 0
 	fmt.Println("time Unix==", time.Now().UnixNano())
 	for {
 		rand.Seed(time.Now().UnixNano())
@@ -109,7 +119,7 @@ func main() {
 			break
 		}
 	}
-	fmt.Printf("生成99,一共用了%v次 \n", times)
+	fmt.Printf("生成99,一共用了%v次 \n", times) */
 
 	// break label
 testlabel:
@@ -124,7 +134,7 @@ testlabel:
 	}
 
 	// 登录验证，三次机会，提示剩余次数
-	var name string
+	/* var name string
 	var pwd string
 	var loginChance int = 3
 	for i := 0; i < 3; i++ {
@@ -142,5 +152,5 @@ testlabel:
 	}
 	if loginChance == 0 {
 		fmt.Println("机会用完，没有登录成功，明天再试")
-	}
+	} */
 }
