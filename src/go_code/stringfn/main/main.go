@@ -78,4 +78,38 @@ func main() {
 		fmt.Printf("第%v个，%v \n", i, strArr[i])
 	}
 
+	// 字符串大小写转化
+	var tmp = "HELLO"
+	var tmp01 = "abc"
+	var str04 = strings.ToLower(tmp)
+	fmt.Println("str04 = ", str04)
+	fmt.Println("tmp = ", tmp)
+	var str05 = strings.ToUpper(tmp01)
+	fmt.Println("str05 = ", str05)
+	fmt.Println("tmp01 = ", tmp01)
+
+	// 去掉字符串前后端空白
+	var str06 = "    hello, 小伙子   "
+	var newstr06 = strings.TrimSpace(str06)
+	fmt.Printf("newstr06 = %q \n", newstr06)
+	fmt.Printf("str06 = %q \n", str06)
+
+	// 去掉左右两边指定字符串
+	fmt.Printf("[%q]\n", strings.Trim(" !!! Achtung! Achtung! !!! ", " !"))
+
+	// 去掉字符串左边指定的字符
+	var str07 = "xxxhello,golang"
+	fmt.Printf("str07 = [%q]\n", strings.TrimLeft(str07, "x"))
+
+	// 去掉字符串右边指定的字符
+	var str08 = "xxxhello,golang"
+	fmt.Printf("str08 = [%q]\n", strings.TrimRight(str08, "golang"))
+
+	// 判断字符串是否已指定字符串开头
+	var b02 = strings.HasPrefix("hello,go", "he")
+	fmt.Println("b02 = ", b02)
+
+	// 判断字符串是否已指定字符串结束
+	var b03 = strings.HasSuffix("hello.go", ".go")
+	fmt.Println("b03 = ", b03)
 }
