@@ -2,6 +2,10 @@ package main
 
 import "fmt"
 
+func test(arr *[3]int) {
+	(*arr)[1] = 10
+}
+
 func main() {
 	// 求3个数的平均数
 	/* n1 := 10.289
@@ -53,4 +57,9 @@ func main() {
 		fmt.Println("index = ", index, "value = ", value)
 	}
 
+	// 指针数组传递
+	var list1 [3]int
+	fmt.Println("list1 = ", list1)
+	test(&list1)
+	fmt.Println("list1 = ", list1)
 }
