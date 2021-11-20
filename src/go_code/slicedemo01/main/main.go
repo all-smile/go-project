@@ -63,7 +63,7 @@ func main() {
 	// 拷贝切片
 	var a []int = []int{1, 2, 3}
 	var b = make([]int, 5) // 长度 容量都是5
-	c := copy(b, a)        // 返回被复制的元素个数，
+	c := copy(a, b)        // 返回被复制的元素个数，
 	fmt.Println("c = ", c)
 	fmt.Println("a = ", a, "容量=", cap(a)) // a =  [1 2 3] 容量= 3
 	fmt.Println("b = ", b, "容量=", cap(b)) // b =  [1 2 3 0 0] 容量= 5
