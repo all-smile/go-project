@@ -36,4 +36,7 @@ func main() {
 	var blank blankInterface = 10
 	fmt.Printf("b类型： %T, 值： %v \n", b, b)             // b类型： <nil>, 值： <nil>
 	fmt.Printf("blank类型： %T, 值： %v \n", blank, blank) // blank类型： int, 值： 10
+	// 直接定义空接口
+	var blank02 interface{}
+	fmt.Printf("blank02类型： %T, 值： %v \n", blank02, blank02) // blank02类型： <nil>, 值： <nil>
 }
