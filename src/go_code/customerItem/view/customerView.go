@@ -74,6 +74,57 @@ func (customer *customerView) delete() {
 	}
 }
 
+// 编写 update() 方法，调用 CustomerService.Update() 方法，修改客户
+func (customer *customerView) update() {
+	fmt.Println("***********************修改客户***********************")
+	fmt.Println("请输入要删除的客户编号（-1：退出）：")
+	id := -1
+	fmt.Scanln(&id)
+	if id == -1 {
+		return
+	}
+	// 输入回车，不修改
+	_, selectCustomer := customer.customerService.FindById(id)
+	fmt.Printf("姓名(%v): ", selectCustomer.Name)
+	name := ""
+	fmt.Scanln(&name)
+	fmt.Printf("性别(%v): ", selectCustomer.Gender)
+	gender := ""
+	fmt.Scanln(&gender)
+	fmt.Printf("年龄(%v): ", selectCustomer.Age)
+	age := 0
+	fmt.Scanln(&age)
+	fmt.Printf("电话(%v): ", selectCustomer.Phone)
+	phone := ""
+	fmt.Scanln(&phone)
+	fmt.Printf("邮箱(%v): ", selectCustomer.Email)
+	email := ""
+	fmt.Scanln(&email)
+	// 回车表示不修改
+	if name == "" {
+		name = selectCustomer.Name
+	}
+	if gender == "" {
+		gender = selectCustomer.Gender
+	}
+	if age == 0 {
+		age = selectCustomer.Age
+	}
+	if phone == "" {
+		phone = selectCustomer.Phone
+	}
+	if email == "" {
+		email = selectCustomer.Email
+	}
+	newCustomer := model.NewCustomer(id, name, gender, age, phone, email)
+	isUpdate := customer.customerService.Update(id, newCustomer)
+	if isUpdate {
+		fmt.Println("*********************客户修改完成*********************")
+	} else {
+		fmt.Println("*********************客户修改失败*********************")
+	}
+}
+
 // 退出方法
 func (customer *customerView) exit() {
 	fmt.Println("你确定退出吗，请输入：Y(是)/N(否)")
@@ -105,14 +156,12 @@ func (customer *customerView) mainView() {
 		case "1":
 			customer.add()
 		case "2":
-			fmt.Println("修改客户")
-			// customer.income()
+			customer.update()
 		case "3":
 			customer.delete()
 		case "4":
 			customer.list()
 		case "5":
-			fmt.Println("退出")
 			customer.exit()
 		default:
 			fmt.Println("输入有误，请重新输入")

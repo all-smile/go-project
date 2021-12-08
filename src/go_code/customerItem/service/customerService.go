@@ -39,7 +39,8 @@ func (customerService *CustomerService) Add(customer model.Customer) bool {
 
 // 编写 Delete() 方法，删除客户
 func (customerService *CustomerService) Delete(id int) bool {
-	index := customerService.FindById(id)
+	index, customer := customerService.FindById(id)
+	fmt.Println("customer = ", customer)
 	if index != -1 {
 		// 删除 id 对应的客户
 		customerService.customers = append(customerService.customers[:index], customerService.customers[index+1:]...)
@@ -50,14 +51,29 @@ func (customerService *CustomerService) Delete(id int) bool {
 	}
 }
 
-// 编写 FindById(id) 方法，查找客户，并返回客户切片下标 (编号个底层切片下标存在不对应的情况)
-func (customerService *CustomerService) FindById(id int) int {
+// 编写 Update() 方法，修改客户
+func (customerService *CustomerService) Update(id int, customer model.Customer) bool {
+	index, _ := customerService.FindById(id)
+	if index != -1 {
+		// 修改 id 对应的客户
+		customerService.customers[index] = customer
+		return true
+	} else {
+		fmt.Printf("找不到编号: %v 的客户\n", id)
+		return false
+	}
+}
+
+// 编写 FindById(id) 方法，查找客户，并返回客户切片下标, 和对应的客户信息 (编号个底层切片下标存在不对应的情况)
+func (customerService *CustomerService) FindById(id int) (int, model.Customer) {
 	// 查找客户切片下标，有则返回，没有则返回 -1
 	index := -1
+	var customer model.Customer
 	for i := 0; i < len(customerService.customers); i++ {
 		if customerService.customers[i].Id == id {
 			index = i
+			customer = customerService.customers[i]
 		}
 	}
-	return index
+	return index, customer
 }
