@@ -4,10 +4,12 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
 )
 
 func main() {
+	// 1、循环读取（大文件）
 	file, err := os.Open("d:/test.txt")
 	if err != nil {
 		fmt.Println("err = ", err)
@@ -46,4 +48,14 @@ func main() {
 			fmt.Println("关闭文件错误")
 		}
 	}()
+
+	// 一次性读取（小文件）
+	file02, err := ioutil.ReadFile("d:/test.txt")
+	if err != nil {
+		fmt.Println("读取失败")
+	}
+	// 不需要显示的Open和Close, 都被封装到 ReadFile 函数里了
+	fmt.Println("file02 = ", file02) // []byte
+	// %s	直接输出字符串或者[]byte
+	fmt.Printf("file02 = %s", file02)
 }
