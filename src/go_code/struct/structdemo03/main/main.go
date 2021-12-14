@@ -19,8 +19,8 @@ type Monsters struct {
 	// 这就需要通过 tag 来转化大写的字段，同时又保证内部调用的时候可以暴露变量
 	// 反射原理
 	Name  string `json:"name"`
-	Age   int    `json:age`
-	Skill string `json:skill`
+	Age   int    `json:"age"`
+	Skill string `json:"skill"`
 }
 
 func main() {
