@@ -3,6 +3,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
 func putNum(intChan chan int) {
@@ -15,7 +16,7 @@ func putNum(intChan chan int) {
 func primeNum(intChan chan int, primeChan chan int, exitChan chan bool) {
 	var flag bool
 	for {
-		// time.Sleep(time.Millisecond * 10)
+		time.Sleep(time.Millisecond * 10)
 		num, ok := <-intChan
 		if !ok {
 			break
@@ -41,6 +42,9 @@ func main() {
 	primeChan := make(chan int, 2000)
 	exitChan := make(chan bool, 4)
 
+	// start time
+	start := time.Now().Unix()
+
 	go putNum(intChan)
 	for i := 0; i < 4; i++ {
 		go primeNum(intChan, primeChan, exitChan)
@@ -49,6 +53,9 @@ func main() {
 		for i := 0; i < 4; i++ {
 			<-exitChan
 		}
+		// end time
+		end := time.Now().Unix()
+		fmt.Println("协程耗费时间：", end-start)
 		close(primeChan)
 	}()
 
