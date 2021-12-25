@@ -3,6 +3,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"reflect"
 )
@@ -42,6 +43,7 @@ func TestStruct(a interface{}) {
 		return
 	}
 	// 结构体字段
+	// 字段的顺序跟定义结构体时字段的先后顺序一致
 	num := val.NumField()
 	fmt.Printf("struct has %v fields \n", num)
 	for i := 0; i < num; i++ {
@@ -74,5 +76,14 @@ func main() {
 		Height: 178.5,
 		Action: "衣食住行",
 	}
+
+	// 序列化就是通过反射机制获取到 tag 值
+	p1Str, err := json.Marshal(p1)
+	if err != nil {
+		fmt.Println("序列化失败", err)
+	} else {
+		fmt.Println("p1Str = ", string(p1Str))
+	}
 	TestStruct(p1)
+	fmt.Println("p1 = ", p1)
 }
