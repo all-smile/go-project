@@ -1,3 +1,4 @@
+// reflect_test.go 单元测试 测试用例
 // 使用反射机制，编写适配器函数 桥连接
 package test
 
