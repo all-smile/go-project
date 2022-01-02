@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 var (
 	userId  int
@@ -10,8 +13,8 @@ var (
 func main() {
 	// 接收用户选择
 	var key int
-	var loop bool
-	for {
+	var loop bool = true
+	for loop {
 		fmt.Println("************************* 欢迎登录多人聊天系统 *************************")
 		fmt.Println("\t\t\t 1. 登录聊天室")
 		fmt.Println("\t\t\t 2. 注册用户")
@@ -26,23 +29,22 @@ func main() {
 			fmt.Println("注册用户")
 		case 3:
 			fmt.Println("退出系统")
-			loop = false
+			// loop = false
+			os.Exit(0) // 退出系统
 		default:
 			fmt.Println("输入有误，重新输入")
 		}
-		if !loop {
-			return
-		}
+		// if !loop {
+		// 	return
+		// }
 		if key == 1 {
 			fmt.Println("请输入用户 ID")
 			fmt.Scanf("%d\n", &userId)
 			fmt.Println("请输入用户密码")
-			fmt.Scanf("%d\n", &userPwd)
+			fmt.Scanf("%s\n", &userPwd)
 			err := login(userId, userPwd)
 			if err != nil {
 				fmt.Println("登陆失败")
-			} else {
-				fmt.Println("登陆成功")
 			}
 		} else if key == 2 {
 			fmt.Println("用户注册")
