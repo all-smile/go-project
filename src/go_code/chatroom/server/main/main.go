@@ -2,8 +2,23 @@ package main
 
 import (
 	"fmt"
+	"go_code/chatroom/server/model"
 	"net"
+	"time"
 )
+
+// 编写函数，完成UserDao初始化
+func initUserDao() {
+	// 这里的 pool 是在 redis.go 定义的全局变量
+	// 需要注意初始化顺序问题
+	model.MyUserDao = model.NewUserDao(pool)
+}
+
+func init() {
+	// 初始化 redis 连接池
+	initPool("localhost:6379", 16, 0, 300*time.Second)
+	initUserDao()
+}
 
 func main() {
 	fmt.Println("🎁新服务端监听 8889 端口")

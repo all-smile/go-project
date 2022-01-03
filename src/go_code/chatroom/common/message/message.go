@@ -2,9 +2,12 @@ package message
 
 // 定义消息类型常量
 const (
-	LoginMesType    = "LoginMes"
-	LoginResMesType = "LoginResMes"
-	RegisterMesType = "RegisterMes"
+	LoginMesType            = "LoginMes"
+	LoginResMesType         = "LoginResMes"
+	RegisterMesType         = "RegisterMes"
+	RegisterResMesType      = "RegisterResMes"
+	NotifyUserStatusMesType = "NotifyUserStatusMes"
+	SmsMesType              = "SmsMes"
 )
 
 type Message struct {
@@ -21,14 +24,48 @@ type LoginMes struct {
 }
 
 type LoginResMes struct {
-	// 状态码： 500-未注册 200-成功
+	// 状态码： 500-未注册 200-成功 403-密码不正确
 	Code int `json:"code"`
 	// 具体错误信息
 	Error string `json:"error"`
+	// 增加返回在线人数字段
+	UserIds []int `json:"userIds"`
 }
 
 // 注册类型
 type RegisterMes struct {
-	UserName string
-	UserPwd  string
+	User User `json:"user"`
+	// UserName string
+	// UserPwd  string
+}
+
+type RegisterResMes struct {
+	Code  int    `json:"code"`
+	Error string `json:"error"`
+}
+
+// 定义常量， 表示在线状态
+const (
+	UserOnline = iota
+	UserOfline
+	UserBusyStatus
+)
+
+// 配合服务端推送 用户状态变化 （在离线）
+type NotifyUserStatusMes struct {
+	UserId int `json:"userId"`
+	Status int `json:"status"`
+}
+
+// 退出登录消息类型
+type LoginOutMes struct {
+	UserId int `json:"userId"`
+	Status int `json:"status"`
+}
+
+// 增加发送消息的类型
+type SmsMes struct {
+	Content string `json:"content"`
+	// 匿名结构体 继承
+	User `json:"user"`
 }

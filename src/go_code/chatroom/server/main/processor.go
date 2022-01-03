@@ -16,6 +16,7 @@ type Processor struct {
 
 // 消息类型中转站： tcp 连接 分发 不同消息类型
 func (proc *Processor) ServerProcessMes(mes *message.Message) (err error) {
+
 	switch mes.Type {
 	case message.LoginMesType:
 		// 处理登录
@@ -26,6 +27,14 @@ func (proc *Processor) ServerProcessMes(mes *message.Message) (err error) {
 		err = userP.ServerProcessLogin(mes)
 	case message.RegisterMesType:
 		// 处理注册
+		userP := &process.UserProcess{
+			Conn: proc.Conn,
+		}
+		err = userP.ServerProcessRegister(mes)
+	case message.SmsMesType:
+		fmt.Println("发消息啦： ", mes)
+		sp := &process.SmsProcess{}
+		err = sp.SendGroupMes(mes)
 	default:
 		fmt.Println("消息类型不存在")
 	}
