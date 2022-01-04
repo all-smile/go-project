@@ -21,10 +21,6 @@ func (sp *SmsProcess) SendGroupMes(mes *message.Message) (err error) {
 		fmt.Println("反序列化失败", err)
 		return
 	}
-	// 定义返回消息类型
-	// var resMes message.Message
-	// resMes.Type = message.SmsMesType
-	// var smsResMes message.SmsMes
 
 	data, err := json.Marshal(mes)
 	if err != nil {

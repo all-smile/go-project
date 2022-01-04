@@ -4,6 +4,8 @@ package message
 const (
 	LoginMesType            = "LoginMes"
 	LoginResMesType         = "LoginResMes"
+	LogoutMesType           = "LogoutMes"
+	LogoutResMesType        = "LogoutResMes"
 	RegisterMesType         = "RegisterMes"
 	RegisterResMesType      = "RegisterResMes"
 	NotifyUserStatusMesType = "NotifyUserStatusMes"
@@ -58,9 +60,20 @@ type NotifyUserStatusMes struct {
 }
 
 // 退出登录消息类型
-type LoginOutMes struct {
+type LogoutMes struct {
 	UserId int `json:"userId"`
 	Status int `json:"status"`
+}
+
+type LogoutResMes struct {
+	// 状态码： 500-失败 200-成功 505-未知错误
+	Code int `json:"code"`
+	// 具体错误信息
+	Error string `json:"error"`
+	// 增加返回在线人数字段
+	UserIds []int `json:"userIds"`
+	// 增加 当前用户的状态 字段
+	NotifyUserStatusMes `json:"notifyUserStatusMes"`
 }
 
 // 增加发送消息的类型

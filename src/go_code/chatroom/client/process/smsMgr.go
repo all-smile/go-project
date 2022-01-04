@@ -7,7 +7,7 @@ import (
 )
 
 func outputGroupMes(mes *message.Message) {
-	// 发序列化
+	// 反序列化
 	var smsMes message.SmsMes
 	err := json.Unmarshal([]byte(mes.Data), &smsMes)
 	if err != nil {

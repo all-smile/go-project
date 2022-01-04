@@ -83,3 +83,15 @@ func (ud *UserDao) Register(user *message.User) (err error) {
 	}
 	return
 }
+
+// 4. 退出校验
+func (ud *UserDao) Logout(userId int) (err error) {
+	conn := ud.pool.Get()
+	defer conn.Close()
+	_, err = ud.getUserById(conn, userId)
+	if err != nil {
+		err = ERROR_USER_NOEXISTS
+		return
+	}
+	return
+}

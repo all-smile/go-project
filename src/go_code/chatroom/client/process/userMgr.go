@@ -22,9 +22,14 @@ func updateUserStatus(notifyUserStatusMes *message.NotifyUserStatusMes) {
 			UserStatus: notifyUserStatusMes.Status,
 		}
 	}
-	// 更新状态
-	user.UserStatus = notifyUserStatusMes.Status
-	onlineUsers[notifyUserStatusMes.UserId] = user
+	if notifyUserStatusMes.Status == 1 {
+		// 不在线
+		delete(onlineUsers, notifyUserStatusMes.UserId)
+	} else {
+		// 更新状态
+		user.UserStatus = notifyUserStatusMes.Status
+		onlineUsers[notifyUserStatusMes.UserId] = user
+	}
 	outputOnlineUser()
 }
 

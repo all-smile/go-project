@@ -178,7 +178,7 @@ func (up *UserProcess) Login(userId int, userPwd string) (err error) {
 }
 
 // 退出登录
-func (up *UserProcess) LoginOut(userId int) (err error) {
+func (up *UserProcess) Logout(userId int) (err error) {
 	// 定协议
 	// 1. 连接服务器
 	conn, err := net.Dial("tcp", "localhost:8889")
@@ -188,5 +188,76 @@ func (up *UserProcess) LoginOut(userId int) (err error) {
 	}
 	// 延时关闭
 	defer conn.Close()
+
+	// 2. 组织消息
+	var reqMes message.Message
+	reqMes.Type = message.LogoutMesType
+	var logoutMes message.LogoutMes
+	logoutMes.UserId = userId
+	logoutMes.Status = message.UserOfline
+
+	// 2.1. 序列化 logoutMes
+	data, err := json.Marshal(logoutMes)
+	if err != nil {
+		fmt.Println("序列化失败", err)
+		return
+	}
+	reqMes.Data = string(data)
+	// 2.1. 序列化 mes
+	data, err = json.Marshal(reqMes)
+	if err != nil {
+		fmt.Println("序列化失败", err)
+		return
+	}
+	// 调用封装的 writePkg() 函数， 向服务端发送数据
+	// 创建 Transfer 实例
+	tf := &utils.Transfer{
+		Conn: conn,
+	}
+	fmt.Println("客户端请求退出， 发送 ->")
+	err = tf.WritePkg(data)
+	if err != nil {
+		fmt.Println("客户端发送消息失败", err)
+		return
+	}
+	fmt.Println("客户端请求退出-----")
+
+	// 处理服务端返回
+	mes, err := tf.ReadPkg()
+	fmt.Printf("退出 mes 类型： %T, 值： %v \n", mes, mes)
+	if err != nil {
+		fmt.Println("服务器处理失败", err)
+		return
+	}
+	// 反序列化
+	var logoutResMes message.LogoutResMes
+	err = json.Unmarshal([]byte(mes.Data), &logoutResMes)
+	if err != nil {
+		fmt.Println("反序列化失败", err)
+		return
+	}
+	fmt.Println("logoutResMes", logoutResMes)
+	if logoutResMes.Code == 200 {
+		fmt.Println("退出成功")
+		// 显示在线用户列表
+		fmt.Println("当前在线用户如下：")
+		for _, v := range logoutResMes.UserIds {
+			// 不显示自己的状态
+			/* if v != userId {
+				continue
+			} */
+			fmt.Printf("用户id: %v \n", v)
+			// 完成 客户端 onlineUsers 初始化
+			user := &message.User{
+				UserId:     v,
+				UserStatus: message.UserOnline,
+			}
+			onlineUsers[v] = user
+		}
+		fmt.Println("onlineUsers = ", onlineUsers)
+		fmt.Print("\n\n")
+	} else {
+		fmt.Println(logoutResMes.Error)
+	}
 	return
 }

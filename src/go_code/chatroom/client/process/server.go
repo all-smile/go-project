@@ -1,3 +1,4 @@
+// 登陆后显示的界面
 // 保持跟服务端的通信
 package process
 
@@ -12,7 +13,8 @@ import (
 
 // 显示登录成功后的界面
 func ShowMenu() {
-	fmt.Println("***************** 欢迎XXX登录多人聊天系统 *****************")
+	info := fmt.Sprintf("***************** 欢迎 %v 登录多人聊天系统 *****************", CurUser.UserId)
+	fmt.Println(info)
 	fmt.Println("***************** 1. 显示在线用户列表 *****************")
 	fmt.Println("***************** 2. 发送消息 *****************")
 	fmt.Println("***************** 3. 信息列表 *****************")
@@ -41,7 +43,14 @@ func ShowMenu() {
 		fmt.Println("信息列表--")
 	case 4:
 		fmt.Println("退出系统--")
-
+		// 创建 UserProcess 实例, 调用 Logout
+		up := &UserProcess{}
+		fmt.Println("CurUser = ", CurUser)
+		err := up.Logout(CurUser.UserId)
+		if err != nil {
+			fmt.Println("退出失败", err)
+			return
+		}
 		os.Exit(0)
 	default:
 		fmt.Println("输入有误，重新输入")
@@ -64,7 +73,7 @@ func ServerProcessMes(conn net.Conn) {
 		fmt.Println("服务端推送的消息 = ", mes)
 		switch mes.Type {
 		case message.NotifyUserStatusMesType:
-			// 有人上线了
+			// 有人上线/下线
 			// 1. 取出 NotifyUserStatusMes
 			// 2. 客户端保存状态 定义 map[int]User
 			// 反序列化

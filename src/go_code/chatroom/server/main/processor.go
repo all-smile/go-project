@@ -16,7 +16,6 @@ type Processor struct {
 
 // 消息类型中转站： tcp 连接 分发 不同消息类型
 func (proc *Processor) ServerProcessMes(mes *message.Message) (err error) {
-
 	switch mes.Type {
 	case message.LoginMesType:
 		// 处理登录
@@ -25,6 +24,12 @@ func (proc *Processor) ServerProcessMes(mes *message.Message) (err error) {
 			Conn: proc.Conn,
 		}
 		err = userP.ServerProcessLogin(mes)
+	case message.LogoutMesType:
+		fmt.Println("退出")
+		userP := &process.UserProcess{
+			Conn: proc.Conn,
+		}
+		err = userP.ServerProcessLogout(mes)
 	case message.RegisterMesType:
 		// 处理注册
 		userP := &process.UserProcess{
@@ -53,7 +58,7 @@ func (proc *Processor) InitProcess() (err error) {
 		mes, err2 := tf.ReadPkg()
 		if err2 != nil {
 			if err2 == io.EOF {
-				fmt.Println("客户端退出，服务端也退出")
+				fmt.Printf("客户端 ip: %v 退出，服务端也退出", proc.Conn.RemoteAddr().String())
 				return err2
 			} else {
 				fmt.Println("readPkg - err2: ", err2)
