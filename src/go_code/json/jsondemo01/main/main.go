@@ -24,8 +24,31 @@ func testStruct() {
 	if err != nil {
 		fmt.Println("序列化失败", err)
 	} else {
-		fmt.Println("data = ", string(data)) // {"name01":"tom","age":18,"height":178.5}
-		fmt.Println("p1 = ", p1)             // {tom 18 178.5}
+		fmt.Println("testStruct = ", string(data)) // {"name01":"tom","age":18,"height":178.5}
+		fmt.Println("Struct p1 = ", p1)            // {tom 18 178.5}
+	}
+}
+
+// 结构体切片 序列化存在问题， 不建议
+// 数组对象应该采用 map切片 []map[string]interface{}
+func testSliceStruct() {
+	type myObj struct {
+		name string
+		age  int
+	}
+	var jsonList []myObj = make([]myObj, 0)
+	obj01 := myObj{
+		name: "xiao",
+		age:  12,
+	}
+	jsonList = append(jsonList, obj01)
+	jsonList = append(jsonList, obj01)
+	fmt.Println("jsonList = ", jsonList)
+	data, err := json.Marshal(jsonList)
+	if err != nil {
+		fmt.Println("序列化失败", err)
+	} else {
+		fmt.Println("testSliceStruct = ", string(data)) // {"剑豪":"索隆","海贼王":"luffy"}
 	}
 }
 
@@ -33,12 +56,12 @@ func testMap() {
 	var dict map[string]interface{} = make(map[string]interface{})
 	dict["海贼王"] = "luffy"
 	dict["剑豪"] = "索隆"
-	fmt.Printf("dict类型： %T, 值：%v \n", dict, dict)
+	fmt.Printf("Map dict类型： %T, 值：%v \n", dict, dict)
 	data, err := json.Marshal(dict)
 	if err != nil {
 		fmt.Println("序列化失败", err)
 	} else {
-		fmt.Println("data = ", string(data)) // {"剑豪":"索隆","海贼王":"luffy"}
+		fmt.Println("testMap = ", string(data)) // {"剑豪":"索隆","海贼王":"luffy"}
 	}
 }
 
@@ -56,7 +79,7 @@ func testSlice() {
 	if err != nil {
 		fmt.Println("序列化失败", err)
 	} else {
-		fmt.Println("data = ", string(data)) // [{"age":7,"name":"xixi"},{"addr":["北京","上海"],"age":8,"name":"haha"}]
+		fmt.Println("testSlice = ", string(data)) // [{"age":7,"name":"xixi"},{"addr":["北京","上海"],"age":8,"name":"haha"}]
 	}
 }
 
@@ -66,7 +89,7 @@ func testFloat64() {
 	if err != nil {
 		fmt.Println("序列化失败", err)
 	} else {
-		fmt.Println("data = ", string(data)) // 12.21
+		fmt.Println("testFloat64 = ", string(data)) // 12.21
 	}
 }
 
@@ -80,4 +103,5 @@ func main() {
 	// 基本数据类型序列化
 	// 对基本数据类型序列化 意义不大
 	testFloat64()
+	testSliceStruct()
 }
