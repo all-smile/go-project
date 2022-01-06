@@ -87,3 +87,19 @@ func main() {
 	TestStruct(p1)
 	fmt.Println("p1 = ", p1)
 }
+
+/*
+p1Str =  {"name01":"tom","age":18,"height":178.5,"Action":"衣食住行"}
+struct has 4 fields
+第1个字段：tom
+第1个字段, tag ： name01
+第2个字段：18
+第2个字段, tag ： age
+第3个字段：178.5
+第3个字段, tag ： height
+第4个字段：衣食住行
+struct 有 3 个方法
+print() =  {tom 18 178.5 衣食住行}
+res =  50
+p1 =  {tom 18 178.5 衣食住行}
+*/
