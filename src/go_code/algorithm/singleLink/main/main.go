@@ -43,7 +43,7 @@ func insertNode02(head *HeroNode, newNode *HeroNode) {
 			// 升降序， 只需要修改 temp.next.no < newNode.no
 			break
 		} else if temp.next.no == newNode.no {
-			fmt.Println("已经存在，不允许加入")
+			fmt.Printf("节点： %v, 已经存在，不允许加入\n", newNode.no)
 			flag = false
 			break
 		}
@@ -136,6 +136,7 @@ func main() {
 	insertNode02(head, hero3)
 	insertNode02(head, hero2)
 	insertNode02(head, hero4)
+	insertNode02(head, hero1)
 	showNode(head)
 	fmt.Println("删除指定节点")
 	delNode(head, 3)
@@ -148,6 +149,8 @@ func main() {
 
 /*
 按顺序插入节点
+节点： 1, 已经存在，不允许加入
+不能插入节点
 [1 , luffy , 海贼王] => [2 , 索隆 , 大剑豪] => [3 , 山治 , allblue] => [4 , 甚平 , 海侠] =>
 删除指定节点
 [1 , luffy , 海贼王] => [2 , 索隆 , 大剑豪] => [4 , 甚平 , 海侠] =>
