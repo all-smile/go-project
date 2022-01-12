@@ -1,3 +1,4 @@
+// 函数递归调用 + 应用场景
 package main
 
 import "fmt"
@@ -44,13 +45,13 @@ func peach(n int) int {
 }
 
 func main() {
-	// test(4)
+	test(4)
 	// test2(4)
 
 	// 斐波那契数列
 	// 1 ，1 ，2 ，3 ，5 ，8， 13 ，21 ，......
 	// f(n) = f(n-2) + f(n-1)
-	// fmt.Println("value=", fbn(5)) // 第5个斐波那契数
+	fmt.Println("value=", fbn(5)) // 第5个斐波那契数
 	// fmt.Println("value=", fbn(6)) // 第6个斐波那契数
 	// fmt.Println("value=", fbn(7))
 	// fmt.Println("value=", fbn(8))

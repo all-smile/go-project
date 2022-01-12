@@ -2,9 +2,13 @@
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+	"time"
+)
 
-func selectSort(arr *[5]int) {
+func selectSort(arr *[80000]int) {
 
 	for i := 0; i < len(arr)-1; i++ {
 		max := arr[i]
@@ -18,69 +22,33 @@ func selectSort(arr *[5]int) {
 		if maxIndex != i {
 			arr[i], arr[maxIndex] = arr[maxIndex], arr[i]
 		}
-		fmt.Printf("第 %v 次排序: %v\n", i+1, arr)
+		// fmt.Printf("第 %v 次排序: %v\n", i+1, arr)
 	}
+}
 
-	// max := arr[0]
-	// maxIndex := 0
-	// for i := 0 + 1; i < len(arr); i++ {
-	// 	if arr[i] > max {
-	// 		max = arr[i]
-	// 		maxIndex = i
-	// 	}
-	// }
-	// if maxIndex != 0 {
-	// 	arr[0], arr[maxIndex] = arr[maxIndex], arr[0]
-	// }
-	// fmt.Println("第1次排序", arr)
-
-	// max = arr[1]
-	// maxIndex = 1
-	// for i := 0 + 2; i < len(arr); i++ {
-	// 	if arr[i] > max {
-	// 		max = arr[i]
-	// 		maxIndex = i
-	// 	}
-	// }
-	// if maxIndex != 0 {
-	// 	arr[1], arr[maxIndex] = arr[maxIndex], arr[1]
-	// }
-	// fmt.Println("第2次排序", arr)
-
-	// max = arr[2]
-	// maxIndex = 2
-	// for i := 0 + 3; i < len(arr); i++ {
-	// 	if arr[i] > max {
-	// 		max = arr[i]
-	// 		maxIndex = i
-	// 	}
-	// }
-	// if maxIndex != 0 {
-	// 	arr[2], arr[maxIndex] = arr[maxIndex], arr[2]
-	// }
-	// fmt.Println("第3次排序", arr)
-
-	// max = arr[3]
-	// maxIndex = 3
-	// for i := 0 + 4; i < len(arr); i++ {
-	// 	if arr[i] > max {
-	// 		max = arr[i]
-	// 		maxIndex = i
-	// 	}
-	// }
-	// if maxIndex != 0 {
-	// 	arr[3], arr[maxIndex] = arr[maxIndex], arr[3]
-	// }
-	// fmt.Println("第4次排序", arr)
+func init() {
+	rand.Seed(time.Now().UnixNano())
 }
 
 func main() {
-	arr := [5]int{10, 34, 19, 100, 80}
+	// arr := [5]int{10, 34, 19, 100, 80}
+
+	var arr [80000]int
+	for i := 0; i < len(arr); i++ {
+		arr[i] = rand.Intn(9000000)
+	}
+
 	fmt.Println("原数组")
-	fmt.Println("arr = ", arr)
+	// fmt.Println("arr = ", arr)
+
+	startTime := time.Now().Unix()
 	selectSort(&arr)
+	endTime := time.Now().Unix()
+
+	fmt.Printf("排序耗费时间： %v 秒\n", endTime-startTime)
+
 	fmt.Println("排序后的数组")
-	fmt.Println("arr = ", arr)
+	// fmt.Println("arr = ", arr)
 }
 
 /*
