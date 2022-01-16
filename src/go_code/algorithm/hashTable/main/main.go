@@ -9,6 +9,7 @@ Google的一个上机题：
 package main
 
 import (
+	"errors"
 	"fmt"
 	"os"
 )
@@ -84,6 +85,40 @@ func (el *EmpLink) FindById(id int) (emp *Emp) {
 	}
 }
 
+// 根据 id 删除 emp
+func (el *EmpLink) DelById(id int) (err error) {
+	// emp := el.FindById(id)
+	// if emp == nil {
+	// fmt.Printf("要删除的雇员id: %v 不存在\n", id)
+	// return errors.New("id不存在")
+	// }
+	cur := el.Head
+	var pre *Emp = nil
+	fmt.Println("删除", id, cur)
+	// 空链表
+	if cur == nil {
+		fmt.Println("空链表")
+		return errors.New("空链表")
+	}
+	// 将删除的就是头节点
+	if cur.Id == id {
+		el.Head = nil
+		return
+	}
+	// 要删除的不是头节点
+	for {
+		if cur != nil && cur.Id == id {
+			pre.Next = cur.Next
+			return
+		} else if cur == nil {
+			fmt.Printf("要删除的雇员id: %v 不存在\n", id)
+			return errors.New("id不存在")
+		}
+		pre = cur
+		cur = cur.Next
+	}
+}
+
 // 定义 hash table, 链表数组
 type HashTable struct {
 	LinkArr [7]EmpLink
@@ -137,10 +172,10 @@ func (ht *HashTable) FindEmpById(id int) *Emp {
 }
 
 // 编写删除 emp 方法
-func (ht *HashTable) DelEmpById(id int) *Emp {
+func (ht *HashTable) DelEmpById(id int) error {
 	// 1. 使用散列函数，确定在哪个链表里
 	linkNo := ht.HashFun(id)
-	return ht.LinkArr[linkNo].FindById(id)
+	return ht.LinkArr[linkNo].DelById(id)
 }
 
 func main() {
@@ -155,7 +190,7 @@ func main() {
 		fmt.Println("*********** 3. 查找雇员 ***********")
 		fmt.Println("*********** 4. 删除雇员 ***********")
 		fmt.Println("*********** 5. 退出 ***********")
-		fmt.Println("请输入(1-4):")
+		fmt.Println("请输入(1-5):")
 		fmt.Scanln(&key)
 		switch key {
 		case 1:
@@ -183,6 +218,12 @@ func main() {
 		case 4:
 			fmt.Println("请输入要删除的雇员id")
 			fmt.Scanln(&id)
+			err := hashTable.DelEmpById(id)
+			if err != nil {
+				fmt.Printf("id: %v 删除失败, %v\n", id, err)
+			} else {
+				fmt.Printf("id: %v 已删除\n", id)
+			}
 		case 5:
 			os.Exit(0)
 		default:
