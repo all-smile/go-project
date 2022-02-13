@@ -9,4 +9,6 @@ import (
 func init() {
 	// 固定路由
 	beego.Router("/", &controllers.MainController{})
+
+	beego.Router("/user", &controllers.UserController{})
 }
