@@ -49,7 +49,6 @@ func (stack *Stack) List() {
 	for i := stack.Top; i >= 0; i-- {
 		fmt.Printf("arr[%d] = %v \n", i, stack.arr[i])
 	}
-
 }
 
 // 判断是运算符的函数 + - * / , 利用 ASCII 码

@@ -42,10 +42,10 @@ func main() {
 	n3 := 64
 	stu1 := Student{}
 	stu2 := &Student{}
-	JudgeType(n1, n2, name, address, n3, stu1, stu2)
-
 	var a interface{}
 	var b *interface{}
+	JudgeType(n1, n2, name, address, n3, stu1, stu2, a, b)
+
 	fmt.Printf("a 类型： %T, 值： %v \n", a, a) // a 类型： <nil>, 值： <nil>
 	fmt.Printf("b 类型： %T, 值： %v \n", b, b) // b 类型： *interface {}, 值： <nil>
 }

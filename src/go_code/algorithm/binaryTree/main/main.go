@@ -41,6 +41,37 @@ func PostOrder(node *Hero) {
 	}
 }
 
+/*
+层序遍历：
+借助队列先进先出的特性，从树的根结点开始，依次将其左子节点和右子节点入队。
+而后每次队列中一个结点出队，都将其左子节点和右子节点入队，直到树中所有结点都出队，
+出队结点的先后顺序就是层次遍历的最终结果
+*/
+func levelOrder(node *Hero) [][]int {
+	ret := [][]int{} // 定义一个存放遍历之后的数组
+	fmt.Printf("res类型： %T \n", ret)
+	if node == nil {
+		return ret
+	}
+	q := []*Hero{node} // 将整颗树怼进队列里
+	for i := 0; len(q) > 0; i++ {
+		ret = append(ret, []int{})
+		p := []*Hero{}
+		for j := 0; j < len(q); j++ {
+			node := q[j]
+			ret[i] = append(ret[i], node.No)
+			if node.Left != nil {
+				p = append(p, node.Left)
+			}
+			if node.Right != nil {
+				p = append(p, node.Right)
+			}
+		}
+		q = p
+	}
+	return ret
+}
+
 func main() {
 	// 构建二叉树
 	root := &Hero{
@@ -91,6 +122,10 @@ func main() {
 	// 后续遍历
 	fmt.Println("后续遍历---")
 	PostOrder(root)
+
+	fmt.Println("层序遍历---")
+	arr := levelOrder(root)
+	fmt.Println("arr = ", arr)
 }
 
 // 前序遍历
@@ -125,3 +160,7 @@ No=4, Name=heihei
 No=3, Name=hehe
 No=1, Name=xixi
 */
+
+// 层序遍历---
+/* res类型： [][]int
+arr =  [[1] [2 3] [10 11 5 4]] */
