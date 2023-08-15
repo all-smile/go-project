@@ -1,6 +1,6 @@
 # GO-PROJECT
 
-该项目代码是学习Go语言过程中实操的记录，包括基础语法、项目案例、算法等等
+该项目代码是学习Go语言过程中实操的记录，包括基础语法、项目案例、Redis、算法等等
 
 ## 项目目录
 
@@ -62,9 +62,15 @@ go-project/src/go_code/
 `-- unittest            # 单元测试
 ```
 
+## 提交代码到远程仓库
+
+```
+git push github master
+git push gitee master
+```
 
 
-## 对应的Golang知识库
+## 个人Golang知识库
 
 [Golang](https://www.yuque.com/xiaojt/tdnh19)
 
